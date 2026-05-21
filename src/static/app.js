@@ -25,6 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeLoginModal = document.querySelector(".close-login-modal");
   const loginMessage = document.getElementById("login-message");
 
+  // Dark mode toggle element
+  const darkModeToggle = document.getElementById("dark-mode-toggle");
+  const themeIcon = document.querySelector(".theme-icon");
+
   // Activity categories with corresponding colors
   const activityTypes = {
     sports: { label: "Sports", color: "#e8f5e9", textColor: "#2e7d32" },
@@ -115,6 +119,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Set authentication class on body
     updateAuthBodyClass();
+  }
+
+  // Dark mode functions
+  function initializeDarkMode() {
+    const savedDarkMode = localStorage.getItem("darkMode");
+    if (savedDarkMode === "true") {
+      document.body.classList.add("dark-mode");
+      updateThemeIcon(true);
+    }
+  }
+
+  function toggleDarkMode() {
+    const isDarkMode = document.body.classList.toggle("dark-mode");
+    localStorage.setItem("darkMode", isDarkMode.toString());
+    updateThemeIcon(isDarkMode);
+  }
+
+  function updateThemeIcon(isDarkMode) {
+    themeIcon.textContent = isDarkMode ? "☀️" : "🌙";
   }
 
   // Validate user session with the server
@@ -238,6 +261,9 @@ document.addEventListener("DOMContentLoaded", () => {
   loginButton.addEventListener("click", openLoginModal);
   logoutButton.addEventListener("click", logout);
   closeLoginModal.addEventListener("click", closeLoginModalHandler);
+
+  // Event listener for dark mode toggle
+  darkModeToggle.addEventListener("click", toggleDarkMode);
 
   // Close login modal when clicking outside
   window.addEventListener("click", (event) => {
@@ -891,6 +917,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize app
   checkAuthentication();
+  initializeDarkMode();
   initializeFilters();
   fetchActivities();
 });
