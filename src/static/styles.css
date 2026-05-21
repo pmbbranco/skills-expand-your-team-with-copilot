@@ -205,6 +205,63 @@ section h3 {
   letter-spacing: 0.3px;
 }
 
+/* Difficulty Badge */
+.difficulty-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 4px;
+}
+
+.difficulty-beginner {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.difficulty-intermediate {
+  background-color: #fff8e1;
+  color: #f57f17;
+}
+
+.difficulty-advanced {
+  background-color: #fce4ec;
+  color: #c62828;
+}
+
+/* Difficulty Filter Buttons */
+.difficulty-filter-container {
+  margin-top: 12px;
+}
+
+.difficulty-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.difficulty-filter {
+  padding: 6px 10px;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  font-size: 0.85rem;
+  text-align: left;
+  transition: background 0.2s, color 0.2s;
+}
+
+.difficulty-filter.active,
+.difficulty-filter:hover {
+  background-color: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
 /* Capacity Indicator */
 .capacity-container {
   margin: 8px 0;
