@@ -519,6 +519,20 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
+    // Build social sharing links
+    const shareText = `Check out "${name}" at Mergington High School!\n\n${details.description}\n\nSchedule: ${formattedSchedule}\n${spotsLeft > 0 ? `${spotsLeft} spots still available!` : "Activity is currently full."}`;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+    const emailUrl = `mailto:?subject=${encodeURIComponent(`Join ${name} at Mergington High School`)}&body=${encodeURIComponent(shareText)}`;
+
+    const shareHtml = `
+      <div class="share-section">
+        <span class="share-label">Share:</span>
+        <a class="share-btn share-whatsapp" href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp">WhatsApp</a>
+        <a class="share-btn share-email" href="${emailUrl}" aria-label="Share via Email">Email</a>
+        <button class="share-btn share-copy" aria-label="Copy to clipboard">Copy</button>
+      </div>
+    `;
+
     activityCard.innerHTML = `
       ${tagHtml}
       <h4>${name}</h4>
@@ -569,12 +583,26 @@ document.addEventListener("DOMContentLoaded", () => {
         `
         }
       </div>
+      ${shareHtml}
     `;
 
     // Add click handlers for delete buttons
     const deleteButtons = activityCard.querySelectorAll(".delete-participant");
     deleteButtons.forEach((button) => {
       button.addEventListener("click", handleUnregister);
+    });
+
+    // Add click handler for copy button
+    const copyButton = activityCard.querySelector(".share-copy");
+    copyButton.addEventListener("click", () => {
+      navigator.clipboard.writeText(shareText).then(() => {
+        copyButton.textContent = "Copied!";
+        setTimeout(() => {
+          copyButton.textContent = "Copy";
+        }, 2000);
+      }).catch(() => {
+        showMessage("Could not copy to clipboard. Please try again.", "error");
+      });
     });
 
     // Add click handler for register button (only when authenticated)
